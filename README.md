@@ -1,4 +1,4 @@
-Strapi Notes Project
+#  Strapi Notes Project
 
 A simple Strapi project to manage Note content type, built locally using Strapi v5.23.4 on WSL Ubuntu.
 
@@ -6,7 +6,7 @@ Table of Contents
 
 Prerequisites
 
-Task 1 — Strapi Setup on WSL Ubuntu (DevOps Checklist)
+## **Task 1 — Strapi Setup on WSL Ubuntu (DevOps Checklist)**
 
 Project Setup
 
@@ -20,9 +20,7 @@ Accessing Data via API
 
 GitHub Repository
 
-Optional: Loom Video
-
-Prerequisites
+## Prerequisites
 
 WSL Ubuntu (or Linux environment)
 
@@ -34,8 +32,8 @@ Git
 
 Browser to access Strapi Admin Panel
 
-✅ Task 1 — Strapi Setup on WSL Ubuntu (DevOps Checklist)
-Step 0 — WSL Ubuntu Prerequisites
+## ✅ Task 1 — Strapi Setup on WSL Ubuntu (DevOps Checklist)
+### Step 0 — WSL Ubuntu Prerequisites
 sudo apt update && sudo apt upgrade -y          # Update system packages
 sudo apt install curl -y                        # Install curl
 sudo apt install git -y                         # Install Git
@@ -60,18 +58,18 @@ Optional check:
 
 node -e 'console.log("Node is working on WSL!")'
 
-Step 1 — Clone Strapi Repository
+### Step 1 — Clone Strapi Repository
 cd ~/projects || mkdir -p ~/projects && cd ~/projects
 git clone https://github.com/strapi/strapi.git
 cd strapi
 
-Step 2 — Install Dependencies
+### Step 2 — Install Dependencies
 yarn install
 
 
 ✅ This will create node_modules and prepare Strapi for local development.
 
-Step 3 — Creating a New Project
+###  Step 3 — Creating a New Project
 cd ~/newprojects
 yarn create strapi my-strapi-project
 
@@ -97,7 +95,7 @@ CLI prompts guide you through: database choice, TypeScript, example data, depend
 
 After finishing, you get a fully scaffolded Strapi project, ready to run locally.
 
-Step 4 — Run the Project
+### Step 4 — Run the Project
 cd ~/newprojects/my-strapi-project
 yarn run develop
 
