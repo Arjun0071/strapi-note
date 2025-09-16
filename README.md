@@ -1,61 +1,138 @@
-# 🚀 Getting started with Strapi
+#  Strapi Notes Project
 
-Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
+A simple Strapi project to manage Note content type, built locally using Strapi v5.23.4 on WSL Ubuntu.
 
-### `develop`
+Table of Contents
 
-Start your Strapi application with autoReload enabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-develop)
+Prerequisites
 
-```
-npm run develop
-# or
-yarn develop
-```
+## **Task 1 — Strapi Setup on WSL Ubuntu (DevOps Checklist)**
 
-### `start`
+Project Setup
 
-Start your Strapi application with autoReload disabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-start)
+Run Locally
 
-```
-npm run start
-# or
-yarn start
-```
+Content Types
 
-### `build`
+Sample Content
 
-Build your admin panel. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-build)
+Accessing Data via API
 
-```
-npm run build
-# or
-yarn build
-```
+GitHub Repository
 
-## ⚙️ Deployment
+## Prerequisites
 
-Strapi gives you many possible deployment options for your project including [Strapi Cloud](https://cloud.strapi.io). Browse the [deployment section of the documentation](https://docs.strapi.io/dev-docs/deployment) to find the best solution for your use case.
+WSL Ubuntu (or Linux environment)
 
-```
-yarn strapi deploy
-```
+Node.js LTS v18.x
 
-## 📚 Learn more
+Yarn (v1.x)
 
-- [Resource center](https://strapi.io/resource-center) - Strapi resource center.
-- [Strapi documentation](https://docs.strapi.io) - Official Strapi documentation.
-- [Strapi tutorials](https://strapi.io/tutorials) - List of tutorials made by the core team and the community.
-- [Strapi blog](https://strapi.io/blog) - Official Strapi blog containing articles made by the Strapi team and the community.
-- [Changelog](https://strapi.io/changelog) - Find out about the Strapi product updates, new features and general improvements.
+Git
 
-Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/strapi). Your feedback and contributions are welcome!
+Browser to access Strapi Admin Panel
 
-## ✨ Community
+## ✅ Task 1 — Strapi Setup on WSL Ubuntu (DevOps Checklist)
+### Step 0 — WSL Ubuntu Prerequisites
+sudo apt update && sudo apt upgrade -y          # Update system packages
+sudo apt install curl -y                        # Install curl
+sudo apt install git -y                         # Install Git
+git --version                                   # Verify Git installation
 
-- [Discord](https://discord.strapi.io) - Come chat with the Strapi community including the core team.
-- [Forum](https://forum.strapi.io/) - Place to discuss, ask questions and find answers, show your Strapi project and get feedback or just talk with other Community members.
-- [Awesome Strapi](https://github.com/strapi/awesome-strapi) - A curated list of awesome things related to Strapi.
 
----
+Install Node.js (LTS 18.x recommended):
 
-<sub>🤫 Psst! [Strapi is hiring](https://strapi.io/careers).</sub>
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt install -y nodejs
+node -v      # Verify Node version
+npm -v       # Verify npm version
+
+
+Install Yarn:
+
+sudo npm install --global yarn
+yarn -v     # Verify Yarn installation
+
+
+Optional check:
+
+node -e 'console.log("Node is working on WSL!")'
+
+### Step 1 — Clone Strapi Repository
+cd ~/projects || mkdir -p ~/projects && cd ~/projects
+git clone https://github.com/strapi/strapi.git
+cd strapi
+
+### Step 2 — Install Dependencies
+yarn install
+
+
+✅ This will create node_modules and prepare Strapi for local development.
+
+###  Step 3 — Creating a New Project
+cd ~/newprojects
+yarn create strapi my-strapi-project
+
+
+✅ This creates a new folder my-strapi-project for your runnable Strapi project.
+Yarn will scaffold your project with:
+
+package.json → project dependencies & scripts
+
+node_modules/ → installed packages
+
+src/ → backend code (API, plugins, config)
+
+.git/ → if you chose to initialize Git
+
+README.md and other config files
+
+What happens when you run it:
+
+Yarn fetches the create-strapi package.
+
+CLI prompts guide you through: database choice, TypeScript, example data, dependencies, git init.
+
+After finishing, you get a fully scaffolded Strapi project, ready to run locally.
+
+### Step 4 — Run the Project
+cd ~/newprojects/my-strapi-project
+yarn run develop
+
+
+Admin Panel: http://localhost:1337/admin
+
+First-time setup: create an admin account (email + password)
+
+After logging in, you can:
+
+Explore the project folder structure
+
+Start the Admin Panel
+
+Create a sample content type
+
+Content Types
+Note
+
+Fields created:
+
+title (Text, short)
+
+body (Long text)
+
+publishedOn (Date)
+
+Sample Content
+Title	Body	Published On
+Meeting Notes	Discussed project milestones and tasks	2025-09-15
+Grocery List	Eggs, milk, bread, peanut butter, coffee	2025-09-14
+Accessing Data via API
+
+Enable public permissions in Settings → Roles → Public for find and findOne.
+
+Use these endpoints:
+
+All notes: http://localhost:1337/api/notes
+
+Single note: http://localhost:1337/api/notes/1
