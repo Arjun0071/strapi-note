@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  postgres-db:
+    image: postgres:15-alpine
+    container_name: postgres-db
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - strapi-net
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+
+  strapi-app:
+    image: strapi-notes:latest       # using your already built Strapi image
+    container_name: strapi-app
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "1337:1337"                 # map Strapi internal port
+    depends_on:
+      - postgres-db
+    networks:
+      - strapi-net
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    restart: always
+    ports:
+      - "80:80"     # host port 80 → Nginx port 80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - strapi-net
+    depends_on:
+      - strapi-app
+
+networks:
+  strapi-net:
+    driver: bridge
+
+volumes:
+  postgres-data:
