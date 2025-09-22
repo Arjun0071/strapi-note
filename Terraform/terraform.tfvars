@@ -1,0 +1,8 @@
+aws_region         = "ap-south-1"
+image_name         = "836471809057.dkr.ecr.ap-south-1.amazonaws.com/strapi-repo"
+image_tag          = "test"
+image_registry     = "836471809057.dkr.ecr.ap-south-1.amazonaws.com"
+key_name           = "strapi-key"
+vpc_cidr           = "10.0.0.0/16"
+subnet_cidr        = "10.0.1.0/24"
+availability_zone  = "ap-south-1a"
