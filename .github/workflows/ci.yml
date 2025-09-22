@@ -34,7 +34,7 @@ jobs:
       # Step 4: Build Docker image using Docker.aws
       - name: Build Docker image
         run: |
-          docker build -f Docker.aws -t ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPO }}:${{ github.sha }} .
+          docker build -f Dockerfile.aws -t ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPO }}:${{ github.sha }} .
 
       # Step 5: Push Docker image to ECR
       - name: Push Docker image
@@ -45,3 +45,4 @@ jobs:
       - name: Set image URI output
         id: image
         run: echo "image=${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPO }}:${{ github.sha }}" >> $GITHUB_OUTPUT
+
