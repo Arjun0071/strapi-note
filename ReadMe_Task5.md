@@ -150,7 +150,7 @@ Test locally before CD to catch issues in user_data.
 Cloud-init logs are your first debugging resource.
 
 **7. Workflow Diagram**
-
+```text
 [GitHub Push] ---> [CI: Build & Push Docker Image] ---> [ECR/Docker Registry]
                                |
                                v
@@ -161,6 +161,8 @@ Cloud-init logs are your first debugging resource.
                                |
                                v
                         [Strapi Container]
+
+```
 
 Always test Terraform scripts locally before GitHub Actions.
 
