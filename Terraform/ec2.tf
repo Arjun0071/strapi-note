@@ -17,7 +17,18 @@ resource "aws_instance" "strapi_ec2" {
     apt-get upgrade -y
 
     # Install required dependencies
-    apt-get install -y docker.io awscli curl
+    apt-get install -y curl
+    apt-get install -y docker.io
+    apt-get install -y unzip curl
+
+    # Install AWS CLI v2
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+    unzip awscliv2.zip
+    ./aws/install
+
+    # Install Node.js (for generating secrets)
+    curl -fsSL https://deb.nodesource.com/setup_20.x | -E bash -
+    apt-get install -y nodejs
 
     # Start and enable Docker service
     systemctl start docker
@@ -34,11 +45,25 @@ resource "aws_instance" "strapi_ec2" {
     docker stop strapi || true
     docker rm strapi || true
 
-    # Run the Strapi container in production mode
+    # Generate Strapi secrets
+    APP_KEYS=$(for i in {1..4}; do openssl rand -base64 32; done | paste -sd, -)
+    JWT_SECRET=$(node -e "console.log(require('crypto').randomBytes(32).toString('base64'))")
+    ADMIN_JWT_SECRET=$(node -e "console.log(require('crypto').randomBytes(32).toString('base64'))")
+    API_TOKEN_SALT=$(node -e "console.log(require('crypto').randomBytes(32).toString('base64'))")
+    TRANSFER_TOKEN_SALT=$(node -e "console.log(require('crypto').randomBytes(32).toString('base64'))")
+    ENCRYPTION_KEY=$(node -e "console.log(require('crypto').randomBytes(32).toString('base64'))")
+
+    # Run the Strapi container in production mode with all secrets
     docker run -d -p 1337:1337 \
       --restart unless-stopped \
       -e NODE_ENV=production \
       -e STRAPI_ADMIN_BACKEND_URL=http://$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4):1337 \
+      -e APP_KEYS="$APP_KEYS" \
+      -e JWT_SECRET="$JWT_SECRET" \
+      -e ADMIN_JWT_SECRET="$ADMIN_JWT_SECRET" \
+      -e API_TOKEN_SALT="$API_TOKEN_SALT" \
+      -e TRANSFER_TOKEN_SALT="$TRANSFER_TOKEN_SALT" \
+      -e ENCRYPTION_KEY="$ENCRYPTION_KEY" \
       --name strapi \
       ${var.image_name}:${var.image_tag}
 EOF
@@ -47,3 +72,4 @@ EOF
     Name = "Strapi-EC2-Ubuntu"
   }
 }
+
