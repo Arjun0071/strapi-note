@@ -5,6 +5,13 @@ resource "aws_instance" "strapi_ec2" {
   subnet_id     = aws_subnet.strapi_subnet.id
   vpc_security_group_ids = [aws_security_group.strapi_sg.id]
 
+  root_block_device {
+    volume_size = 20 
+    volume_type = "gp3" # or gp2
+    delete_on_termination = true
+  }
+
+
  # Attach IAM instance profile for private ECR access
   iam_instance_profile = aws_iam_instance_profile.ec2_ecr_profile.name
 
@@ -72,4 +79,5 @@ EOF
     Name = "Strapi-EC2-Ubuntu"
   }
 }
+
 
