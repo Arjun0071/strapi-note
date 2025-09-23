@@ -31,10 +31,10 @@ resource "aws_instance" "strapi_ec2" {
     # Install AWS CLI v2
     curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
     unzip awscliv2.zip
-    ./aws/install
+    sudo ./aws/install
 
     # Install Node.js (for generating secrets)
-    curl -fsSL https://deb.nodesource.com/setup_20.x | -E bash -
+    curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
     apt-get install -y nodejs
 
     # Start and enable Docker service
@@ -79,5 +79,6 @@ EOF
     Name = "Strapi-EC2-Ubuntu"
   }
 }
+
 
 
